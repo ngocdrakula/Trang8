@@ -1,5 +1,7 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const userController = require('../../controllers/user');
+
 
 
 const userRouter = express.Router();
@@ -8,7 +10,7 @@ userRouter.post("/login", (req, res) => {
     const {email, username, password} = req.body;
     if(email){
         userController.find({email: {$regex: new RegExp(email, "i")}}).then(user => {
-            if(password == user.password){
+            if(bcrypt.compareSync(password, user.password)){
                 req.session.userInfo = {
                     _id: user._id,
                     email: user.email,
@@ -44,7 +46,7 @@ userRouter.post("/login", (req, res) => {
     }
     else if(username){
         userController.find({username: {$regex: new RegExp(username, "i")}}).then(user => {
-            if(password == user.password){
+            if(bcrypt.compareSync(password, user.password)){
                 req.session.userInfo = {
                     _id: user._id,
                     email: user.email,
@@ -99,7 +101,7 @@ userRouter.post("/register", (req, res) => {
             });
         }
     }).catch(err => {
-        userController.create({email, username, password, name})
+        userController.create({email, username, password: bcrypt.hashSync(password, 10), name})
         .then(user => {
             req.session.userInfo = {
                 _id: user._id,
