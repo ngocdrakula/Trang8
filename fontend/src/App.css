@@ -1401,6 +1401,7 @@ input[type=submit]{
   margin: 0px 10px;
   text-align: left;
   height: auto;
+  color: black;
 }
 .noteAvatar textarea{
   height: 20px;
