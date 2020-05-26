@@ -137,7 +137,7 @@ conversationRouter.get('/:id', (req, res) => {
             }
             else
                 res.json({
-                    success: true
+                    success: true,
                 });
         });
     }

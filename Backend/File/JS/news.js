@@ -196,7 +196,7 @@ function renderInfo(active){
     `
         <div class="lineInfo">
             <div class="info">
-                ${emLength}00 lượt thích
+                ${emLength} lượt thích
             </div>
         </div>
     `;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from '../../axios';
+import FormButton from '../Form/FormButton';
 
 
 export default class PostActive extends Component {
@@ -48,15 +49,29 @@ export default class PostActive extends Component {
       <div className="writeComment">
         <form onSubmit={this.sendComment}>
             <div className="form-group">
-              <div className="comment-textarea">
+              {this.props.user ? 
+                <>
                   <textarea placeholder="Viết bình luận"
-                  onChange={this.inputChange}
-                  onKeyDown={this.checkEnter}
-                  value={this.state.comment}></textarea>
-              </div>
-              <div className="input">
-                  <input type="submit" value ="Gửi" />
-              </div>
+                    onChange={this.inputChange}
+                    onKeyDown={this.checkEnter}
+                    value={this.state.comment}
+                  />
+                  <div className="input">
+                      <input type="submit" value ="Gửi" />
+                  </div>
+                </>
+              :
+                <FormButton className="comment-textarea" formType="login">
+                  <textarea placeholder="Viết bình luận"
+                    onChange={this.inputChange}
+                    onKeyDown={this.checkEnter}
+                    value={this.state.comment}
+                  />
+                  <div className="input">
+                      <input type="submit" value ="Gửi" />
+                  </div>
+                </FormButton>
+              }
           </div>
         </form>
       </div>

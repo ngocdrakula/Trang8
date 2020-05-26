@@ -91,7 +91,7 @@ class ConversationList extends Component {
                         </div>
                           <Time className="conversationTime"
                             createdAt={conversation.message[0].createdAt}
-                            title={2} value={0} />
+                            title={2} value={1} />
                         </div>
                       <div className="inboxLastMessage textover">
                         {author}: {conversation.message[0].message}

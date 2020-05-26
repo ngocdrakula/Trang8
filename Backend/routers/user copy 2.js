@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const userController = require('../controllers/user');
 
 
@@ -9,7 +8,7 @@ userRouter.post("/login", (req, res) => {
     const {email, username, password} = req.body;
     if(email){
         userController.find({email: {$regex: new RegExp(email, "i")}}).then(user => {
-            if(bcrypt.compareSync(password, user.password)){
+            if(password == user.password){
                 req.session.userInfo = {
                     _id: user._id,
                     email: user.email,
@@ -45,7 +44,7 @@ userRouter.post("/login", (req, res) => {
     }
     else if(username){
         userController.find({username: {$regex: new RegExp(username, "i")}}).then(user => {
-            if(bcrypt.compareSync(password, user.password)){
+            if(password == user.password){
                 req.session.userInfo = {
                     _id: user._id,
                     email: user.email,
@@ -100,7 +99,7 @@ userRouter.post("/register", (req, res) => {
             });
         }
     }).catch(err => {
-        userController.create({email, username, password: bcrypt.hashSync(password, 10), name})
+        userController.create({email, username, password, name})
         .then(user => {
             req.session.userInfo = {
                 _id: user._id,
@@ -148,7 +147,7 @@ userRouter.get("/logout", (req, res) => {
         });
     }
     req.session.userInfo = null;
-    res.json({success: true});
+    res.redirect("/");
 });
 userRouter.get("/data-userinfo.js", (req, res) => {
     res.setHeader('content-type', 'text/javascript');
@@ -157,6 +156,5 @@ userRouter.get("/data-userinfo.js", (req, res) => {
 userRouter.get("/userinfo", (req, res) => {
     res.json(req.session.userInfo);
 });
-
 
 module.exports = userRouter;

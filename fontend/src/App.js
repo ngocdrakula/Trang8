@@ -17,6 +17,7 @@ import Title from './modules/Title';
 import Sound from './sound';
 import FormContainer from './modules/Form/FormContainer';
 import Search from './components/Search';
+import Test from "./modules/Test";
 
 var defaultState = {
   title: "Trang8",
@@ -162,35 +163,35 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Title />
-        <NavBar user={this.state.user} />
-        {this.state.user ?
-          <MessageContainer user={this.state.user} />
-        : ""
-        }
-        <FormContainer />
-        <div className="container">
-          <Router>
-              <Switch>
-                <Route path="/profile/:id" render={(routerData) => 
-                  <Profile memberId={routerData.match.params.id} user={this.state.user} />}
-                />
-                <Route path="/post/:id" render={(routerData) =>
-                  <Post postId={routerData.match.params.id} user={this.state.user}/>}
-                />
-                <Route path="/search/:q" render={(routerData) =>
-                  <Search q={routerData.match.params.q} user={this.state.user} />}
-                />
-                <Route path="/:id">
-                  <ErrorPage />
-                </Route>
-                <Route path="/">
-                  <Home user={this.state.user}/>
-                </Route>
-              </Switch>
-          </Router>
-          <RightContiner user={this.state.user} />
-        </div>
+      <Title />
+      <NavBar user={this.state.user} />
+      {this.state.user ?
+        <MessageContainer user={this.state.user} />
+      : ""
+      }
+      <FormContainer />
+      <div className="container">
+        <Router>
+            <Switch>
+              <Route path="/profile/:id" render={(routerData) => 
+                <Profile memberId={routerData.match.params.id} user={this.state.user} />}
+              />
+              <Route path="/post/:id" render={(routerData) =>
+                <Post postId={routerData.match.params.id} user={this.state.user}/>}
+              />
+              <Route path="/search/:q" render={(routerData) =>
+                <Search q={routerData.match.params.q} user={this.state.user} />}
+              />
+              <Route path="/:id">
+                <ErrorPage />
+              </Route>
+              <Route path="/">
+                <Home user={this.state.user}/>
+              </Route>
+            </Switch>
+        </Router>
+        <RightContiner user={this.state.user} />
+      </div>
       </Provider>
     );
   }

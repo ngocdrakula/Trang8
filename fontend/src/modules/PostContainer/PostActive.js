@@ -58,6 +58,7 @@ export default class PostActive extends Component {
             <WriteComment
               active={this.props.active._id}
               updateActive={this.updateActive}
+              user={this.props.user}
             />
           </div>
       );

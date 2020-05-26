@@ -21,12 +21,16 @@ class MessageBox extends Component {
     componentDidMount(){
         axios.get('/conversation/' + this.props.to._id + '?order=0')
         .then(messageList => {
+            console.log(messageList.data)
           if(messageList.data && messageList.data.success){
+
             var conversation = messageList.data.data;
             var seen = Date.now();
             var newMessage = false;
             var message = [];
+            console.log('toi day1')
             if(conversation){
+                console.log('toi day2')
                 message = conversation.message;
                 if(conversation.leader.user === this.props.user._id){
                     seen = Date.parse(conversation.leader.seen);
@@ -39,13 +43,23 @@ class MessageBox extends Component {
                 if(lastMessage.author === this.props.to._id && seen < Date.parse(lastMessage.createdAt)){
                     newMessage = true;
                 }
+                this.props.dispatch({
+                    type: 'UPDATE_CONVERSATIONS',
+                    to: this.props.to,
+                    conversation: conversation,
+                    newMessage: newMessage
+                });
             }
-            this.props.dispatch({
-                type: 'UPDATE_CONVERSATIONS',
-                to: this.props.to,
-                conversation: conversation,
-                newMessage: newMessage
-            });
+            else{
+                console.log('toi day3')
+                this.props.dispatch({
+                    type: 'OPEN_CONVERSATIONS',
+                    to: this.props.to,
+                    conversation: conversation,
+                    newMessage: newMessage
+                });
+            }
+            console.log('toi day4')
             this.setState({
                 messageList: message,
                 seen: seen,

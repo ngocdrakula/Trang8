@@ -39,7 +39,8 @@ export default class News extends Component {
                     postLists: [...preState.postLists, ...newPostLists],
                     order: preState.order + 5,
                     last: Date.now(),
-                    getFeed: true
+                    getFeed: newPostLists.length,
+                    lastPost: newPostLists.length
                 }));
             }
         }).catch(error => {
@@ -59,7 +60,10 @@ export default class News extends Component {
             {this.state.postLists.length ?
                 <div className="bottomNews">
                     <div className="loadNews">
-                        {this.props.member ? `Hiển thị thêm` : `Xem thêm tin`}
+                        {this.state.lastPost !== 0 ?
+                            this.props.member ? `Hiển thị thêm` : `Xem thêm tin`
+                        : 
+                            this.props.member ? `Cuối trang` : `Chia sẻ bài viết hoặc theo dõi mọi người để có nhiều tin hơn`}
                     </div>
                 </div>
                 : ""}

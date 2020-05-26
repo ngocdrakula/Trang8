@@ -72,7 +72,6 @@ export default class StatusForm extends Component {
         })
     }
     formSubmit = (e) => {
-        console.log('alo')
         e.preventDefault();
         var data = new FormData();
         data.append('file', document.getElementById('photo').files[0]);
